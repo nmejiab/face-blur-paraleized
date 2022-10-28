@@ -1,0 +1,21 @@
+{
+    "files.associations": {
+        "ostream": "cpp",
+        "fstream": "cpp",
+        "memory": "cpp",
+        "sstream": "cpp",
+        "*.tcc": "cpp",
+        "iostream": "cpp",
+        "cmath": "cpp",
+        "array": "cpp",
+        "istream": "cpp",
+        "tuple": "cpp",
+        "utility": "cpp",
+        "new": "cpp",
+        "functional": "cpp",
+        "thread": "cpp",
+        "ratio": "cpp",
+        "string_view": "cpp"
+    },
+    "C_Cpp.errorSquiggles": "Disabled"
+}

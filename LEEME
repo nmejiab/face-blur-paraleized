@@ -1,0 +1,15 @@
+Desarrollado por:
+    - Martin Alonso Gomez Uribe
+    - Nicolás Darío Mejía Borda
+Requisitos:
+    - Disponer de g++
+    - Disponer de opencv
+Antes de ejecutar
+    - dirigirse a las lineas 31 y 32, allí cambiar las rutas por las propias de su computadora
+      para los archivos haarcascade_eye_tree_eyeglasses.xml y haarcascade_frontalface_alt.xml
+      respectivamente
+    - En la carpeta del proyecto almacenar el video con nombre "video.mp4"
+Para la ejecución.
+    ubicado en la carpeta del proyecto ejecutar el comando "sudo bash deploy.sh" luego digite su contraseña de super usuario y presione enter
+Resultado
+    Luego de ejecutar el programa abrir el video de nombre videosalida.mp4
