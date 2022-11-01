@@ -87,8 +87,8 @@ void setVideoValues(){
     fps = fpsDouble;
     fcc = VideoWriter::fourcc('X', 'V', 'I', 'D');
     writer = VideoWriter(videoRouteExit, fcc, fps, frameSize, true);
-    nestedCascade.load("/home/opencv-4.6.0/data/haarcascades/haarcascade_eye_tree_eyeglasses.xml");
-    cascade.load("/home/opencv-4.6.0/data/haarcascades/haarcascade_frontalface_alt.xml");
+    nestedCascade.load("/home/opencv/data/haarcascades/haarcascade_eye_tree_eyeglasses.xml");
+    cascade.load("/home/opencv/data/haarcascades/haarcascade_frontalface_alt.xml");
 }
 
 void fromVideoToMats(){
