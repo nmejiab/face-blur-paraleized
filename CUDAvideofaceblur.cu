@@ -21,10 +21,9 @@ using namespace cv;
 __global__ void add(int *a, int *b, int *c) {
     int index = threadIdx.x + blockIdx.x * blockDim.x;
     c[index] = a[index] + b[index];
-}
+};
 
-void random_ints(int* a, int N)
-{
+void random_ints(int* a, int N){
    int i;
    for (i = 0; i < N; ++i)
     a[i] = rand();
