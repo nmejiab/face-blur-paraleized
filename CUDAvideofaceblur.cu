@@ -23,9 +23,9 @@ __global__ void add(int *a, int *b, int *c) {
     c[index] = a[index] + b[index];
 }
 
-void random_ints(int *a, int N){
-   int i;
-   for (i = 0; i < N; ++i)
+void random_ints(int* a, int n){
+    int i;
+    for (i = 0; i < n; ++i)
     a[i] = rand();
 }
 
