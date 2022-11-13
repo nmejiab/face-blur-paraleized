@@ -78,8 +78,8 @@ int main(int argc, char* argv[])
     double scale = 1;
 
     // Cargar clasificadores
-    nestedCascade.load("C:/Users/USUARIO/OpenCV/opencv/build/etc/haarcascades/haarcascade_eye_tree_eyeglasses.xml");
-    cascade.load("C:/Users/USUARIO/OpenCV/opencv/build/etc/haarcascades/haarcascade_frontalface_alt.xml");
+    nestedCascade.load("/home/opencv/data/haarcascades/haarcascade_eye_tree_eyeglasses.xml");
+    cascade.load("/home/opencv/data/haarcascades/haarcascade_frontalface_alt.xml");
 
     // Ruta para el videos
     if (argc != 3) {
