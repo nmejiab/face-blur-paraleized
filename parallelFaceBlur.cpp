@@ -118,7 +118,7 @@ void cloneMats(){
         for(int i = 0; i < framesPerThread; i++){
             Mat evaluate = *(*(inVideoFrames + id) + i);
             if(evaluate.empty())
-                break;
+                continue;
             *(*(exitVideoFrames + id) + i) = evaluate;
         }
     }
@@ -132,7 +132,7 @@ void blurVideo(){
         for(int i = 0; i < framesPerThread;i++){
             Mat evaluate = *(*(exitVideoFrames + id) + i);
             if(evaluate.empty())
-                break;
+                continue;
             detectAndDraw(*(*(exitVideoFrames + id) + i));
         }
     }
@@ -143,14 +143,14 @@ void writeExitVideo(){
         for(int j = 0; j < framesPerThread; j++){
             Mat evaluate = *(*(exitVideoFrames + i) + j);
             if(evaluate.empty())
-                break;
+                continue;
             writer.write(*(*(exitVideoFrames + i) + j));
         }
     }
 }
 
 void detectAndDraw(Mat& img){
-    vector<Rect> faces, faces2;
+    vector<Rect> faces;
     Mat gray, smallImg;
 
     cvtColor(img, gray, COLOR_BGR2GRAY); // transform to grayscale
@@ -165,9 +165,9 @@ void detectAndDraw(Mat& img){
         2, 0 | CASCADE_SCALE_IMAGE, Size(30, 30));
 
     // draw circles around the faces
-    for (size_t i = 0; i < faces.size(); i++)
+    for (size_t h = 0; h < faces.size(); h++)
     {
-        Rect r = faces[i];
+        Rect r = faces[h];
         Mat smallImgROI;
         vector<Rect> nestedObjects;
         
