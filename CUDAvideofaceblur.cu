@@ -23,6 +23,13 @@ __global__ void add(int *a, int *b, int *c) {
     c[index] = a[index] + b[index];
 }
 
+void random_ints(int* a, int N)
+{
+   int i;
+   for (i = 0; i < N; ++i)
+    a[i] = rand();
+}
+
 // Function para detectar rostros
 void detectAndDraw(Mat& img, CascadeClassifier& cascade,
     CascadeClassifier& nestedCascade, double scale);
