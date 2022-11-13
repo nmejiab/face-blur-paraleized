@@ -86,8 +86,8 @@ int main(int argc, char* argv[])
         cout << "Video no encontrado" << endl;
     }
     else {
-        capture.open(argv[1]);
-        filename = argv[2];// Nombre del video de salida
+        capture.open("/content/" + argv[1]);
+        filename = "/content/" + argv[2];// Nombre del video de salida
     }
 
     if (capture.isOpened())
