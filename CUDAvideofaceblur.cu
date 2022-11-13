@@ -162,9 +162,9 @@ void detectAndDraw(Mat& img, CascadeClassifier& cascade,
         2, 0 | CASCADE_SCALE_IMAGE, Size(30, 30));
 
     // Dibuja círculos alrededor de las caras.
-    for (size_t i = 0; i < faces.size(); i++)
+    for (size_t h = 0; h < faces.size(); h++)
     {
-        Rect r = faces[i];
+        Rect r = faces[h];
         Mat smallImgROI;
         vector<Rect> nestedObjects;
         
