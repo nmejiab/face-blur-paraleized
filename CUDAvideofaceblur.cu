@@ -82,12 +82,14 @@ int main(int argc, char* argv[])
     cascade.load("/home/opencv/data/haarcascades/haarcascade_frontalface_alt.xml");
 
     // Ruta para el videos
+    String videoRouteIn = "/content/" + argv[1];
+    String videoRouteExit = "/content/" + argv[2];
     if (argc != 3) {
         cout << "Video no encontrado" << endl;
     }
     else {
-        capture.open("/content/" + argv[1]);
-        filename = "/content/" + argv[2];// Nombre del video de salida
+        capture.open(videoRouteIn);
+        filename = videoRouteExit;// Nombre del video de salida
     }
 
     if (capture.isOpened())
