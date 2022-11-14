@@ -190,7 +190,7 @@ void detectAndDraw(Mat& img, CascadeClassifier& cascade,
                 err = cudaMemcpy(h_C, d_C, size, cudaMemcpyDeviceToHost);
 
                 rect.x = h_C[0];
-                rect.y = h_C[1];
+                rect.y = r.y + i;
                 rect.width = j + pixel_size < r.height ? pixel_size : r.height - j;
                 rect.height = i + pixel_size < r.width ? pixel_size : r.width - i;
                 
