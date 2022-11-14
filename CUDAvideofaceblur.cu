@@ -7,6 +7,7 @@
 #include <stddef.h>
 #include <time.h>
 
+#include <cuda_runtime.h>
 #include <opencv2/objdetect.hpp>
 #include <opencv2/highgui.hpp>
 #include <opencv2/imgproc.hpp>
@@ -36,7 +37,7 @@ void random_ints(int* a, int n){
 }
 
 // Function para detectar rostros
-__global__ void detectAndDraw(Mat& img, CascadeClassifier& cascade,
+void detectAndDraw(Mat& img, CascadeClassifier& cascade,
     CascadeClassifier& nestedCascade, double scale);
 string cascadeName, nestedCascadeName;
 
@@ -113,7 +114,7 @@ int main(int argc, char* argv[])
     return 0;
 }
 
-__global__ void detectAndDraw(Mat& img, CascadeClassifier& cascade,
+void detectAndDraw(Mat& img, CascadeClassifier& cascade,
     CascadeClassifier& nestedCascade,
     double scale)
 {
