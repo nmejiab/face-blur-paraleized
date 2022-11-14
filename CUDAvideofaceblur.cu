@@ -20,12 +20,7 @@ using namespace cv;
 
 __global__ void Add(const float *A, const float *B, float *C, int numElements, int pixel_size)
 {
-    int i = blockDim.x * blockIdx.x + threadIdx.x;
-
-    if (i < numElements)
-    {
-        C[i] = A[i] + B[i];
-    }
+    
 }
 
 void random_ints(int* a, int n){
