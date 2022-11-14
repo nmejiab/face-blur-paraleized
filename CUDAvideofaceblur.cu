@@ -190,7 +190,7 @@ void detectAndDraw(Mat& img, CascadeClassifier& cascade,
 
                 
                 int blocksPerGrid =(numElements + threadsPerBlock - 1) / threadsPerBlock;
-                Add<<<blocksPerGrid, threadsPerBlock>>>(d_A, d_B, d_C, numElements, pixel_size);
+                Add<<<1, threadsPerBlock>>>(d_A, d_B, d_C, numElements, pixel_size);
                 err = cudaGetLastError();
 
                 err = cudaMemcpy(h_C, d_C, size, cudaMemcpyDeviceToHost);
