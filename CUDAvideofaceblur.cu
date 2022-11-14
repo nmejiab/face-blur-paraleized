@@ -62,6 +62,9 @@ int main(int argc, char* argv[])
 
     // Copy result back to host
     cudaMemcpy(c, d_c, size, cudaMemcpyDeviceToHost);
+    
+    cout << c << endl;
+    cout << "Test 1" << endl;
     // Cleanup
     free(a); free(b); free(c);
     cudaFree(d_a); cudaFree(d_b); cudaFree(d_c);
@@ -88,7 +91,6 @@ int main(int argc, char* argv[])
         cout << "Error en numero de parametros de entrada" << endl;
     }
     else {
-        cout << "Test 1" << endl;
         // Ruta para el videos
         String nameIn = argv[1];
         String nameOut = argv[2];
