@@ -164,11 +164,11 @@ void detectAndDraw(Mat& img, CascadeClassifier& cascade,
                 
 
                 // Allocate the device input vector A
-                float *d_A = NULL;
+                int *d_A = NULL;
                 cudaMalloc((void **)&d_A, size);
-                float *d_B = NULL;
+                int *d_B = NULL;
                 cudaMalloc((void **)&d_B, size);
-                float *d_C = NULL;
+                int *d_C = NULL;
                 cudaMalloc((void **)&d_C, size);
                 cudaMemcpy(d_A, h_A, size, cudaMemcpyHostToDevice);
                 cudaMemcpy(d_B, h_B, size, cudaMemcpyHostToDevice);
