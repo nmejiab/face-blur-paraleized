@@ -60,7 +60,7 @@ int main(int argc, char* argv[])
 
     // Copy result back to host
     cudaMemcpy(c, d_c, size, cudaMemcpyDeviceToHost);
-
+    cout << c;
     // Cleanup
     free(a); free(b); free(c);
     cudaFree(d_a); cudaFree(d_b); cudaFree(d_c);
@@ -109,8 +109,7 @@ int main(int argc, char* argv[])
         cout << " Total frames: " << total_frames << endl;
 
         //Define los fps de video de salida
-        int FPS = 30; //Frames per second
-        double fontScale = 2;
+        int FPS = 25; //Frames per second
 
         //Defina el códec de video por FOURCC, método de grabación, entero fourcc
         int fcc = VideoWriter::fourcc('X', 'V', 'I', 'D');
@@ -129,11 +128,6 @@ int main(int argc, char* argv[])
             detectAndDraw(frame1, cascade, nestedCascade, scale);
             //Escribe el frame en el archivo de salida.
             writer.write(frame1);
-            char c = (char)waitKey(10);
-
-            // Presione q para salir de la ventana
-            if (c == 27 || c == 'q' || c == 'Q')
-                break;
         }
     }
     else
