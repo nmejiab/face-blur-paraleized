@@ -126,10 +126,20 @@ int main(int argc, char* argv[])
             if (frame.empty())
                 break;
             Mat frame1 = frame.clone();
-            detectAndDraw(capture[i], cascade, nestedCascade, scale);
+            detectAndDraw(frame1, cascade, nestedCascade, scale);
             //Escribe el frame en el archivo de salida.
             writer.write(frame1);
             i++;
+        }
+        int total_frames_writer = eriter.get(cv::CAP_PROP_FRAME_COUNT);
+        if(total_frames_writer==total_frames){
+            cout<<"YES"<<endl;
+            cout<<total_frames_writer<<endl;
+            cout<<total_frames<<endl;
+        }else{
+            cout<<"NO"<<endl;
+            cout<<total_frames_writer<<endl;
+            cout<<total_frames<<endl;
         }
     }
     else
