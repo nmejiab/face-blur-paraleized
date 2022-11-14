@@ -198,8 +198,16 @@ void detectAndDraw(Mat& img, CascadeClassifier& cascade,
 
                 rect.x = h_C[0];
                 rect.y = h_C[1];
-                rect.width =j + pixel_size < r.height ? r.height;
-                rect.height = i + pixel_size < r.width ? r.width;
+                if (j + pixel_size < r.height){
+                    rect.width =j + pixel_size;
+                }else{
+                    rect.width = r.height;
+                }
+                if (i + pixel_size < r.width){
+                    rect.width =i + pixel_size;
+                }else{
+                    rect.width = r.width;
+                }
                 
                 // obtener el color promedio del area indicada
                 Scalar color = mean(Mat(img, rect));
