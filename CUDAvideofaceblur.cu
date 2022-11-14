@@ -18,7 +18,7 @@
 using namespace std;
 using namespace cv;
 
-__global__ void vectorAdd(const float *A, const float *B, float *C, int numElements, int pixel_size)
+__global__ void Add(const float *A, const float *B, float *C, int numElements, int pixel_size)
 {
     int i = blockDim.x * blockIdx.x + threadIdx.x;
 
@@ -41,36 +41,6 @@ string cascadeName, nestedCascadeName;
 
 int main(int argc, char* argv[])
 {
-    ////////////////////////////////////////////////////////////////////////////////////
-    int *a, *b, *c;			// host copies of a, b, c
-    int *d_a, *d_b, *d_c;		// device copies of a, b, c
-    int size = N * sizeof(int);
-
-    // Alloc space for device copies of a, b, c
-    cudaMalloc((void **)&d_a, size);
-    cudaMalloc((void **)&d_b, size);
-    cudaMalloc((void **)&d_c, size);
-
-    // Alloc space for host copies of a, b, c and setup input values
-    a = (int *)malloc(size); random_ints(a, N);
-    b = (int *)malloc(size); random_ints(b, N);
-    c = (int *)malloc(size);
-
-    // Copy inputs to device
-    cudaMemcpy(d_a, a, size, cudaMemcpyHostToDevice);
-    cudaMemcpy(d_b, b, size, cudaMemcpyHostToDevice);
-
-    // Launch add() kernel on GPU
-    add<<<N/THREADS_PER_BLOCK,THREADS_PER_BLOCK>>>(d_a, d_b, d_c);
-    cudaDeviceSynchronize();
-
-    // Copy result back to host
-    cudaMemcpy(c, d_c, size, cudaMemcpyDeviceToHost);
-    
-    // Cleanup
-    free(a); free(b); free(c);
-    cudaFree(d_a); cudaFree(d_b); cudaFree(d_c);
-    ////////////////////////////////////////////////////////////////////////////////////
 
     // Clase VideoCapture para reproducir videos para los cuales se detectarán las caras
     VideoCapture capture;
@@ -182,9 +152,6 @@ void detectAndDraw(Mat& img, CascadeClassifier& cascade,
 
                 // Allocate the host output vector C
                 float *h_C = (float *)malloc(size);
-                
-                // Allocate the host output vector C
-                float *h_C = (float *)malloc(size);
   
                 h_A[0] = r.x;
                 h_B[0] = j;
@@ -198,25 +165,25 @@ void detectAndDraw(Mat& img, CascadeClassifier& cascade,
 
                 // Allocate the device input vector A
                 float *d_A = NULL;
-                err = cudaMalloc((void **)&d_A, size);
+                cudaMalloc((void **)&d_A, size);
                 float *d_B = NULL;
-                err = cudaMalloc((void **)&d_B, size);
+                cudaMalloc((void **)&d_B, size);
                 float *d_C = NULL;
-                err = cudaMalloc((void **)&d_C, size);
-                err = cudaMemcpy(d_A, h_A, size, cudaMemcpyHostToDevice);
-                err = cudaMemcpy(d_B, h_B, size, cudaMemcpyHostToDevice);
+                cudaMalloc((void **)&d_C, size);
+                cudaMemcpy(d_A, h_A, size, cudaMemcpyHostToDevice);
+                cudaMemcpy(d_B, h_B, size, cudaMemcpyHostToDevice);
                 int threadsPerBlock = 256;
                 int blocksPerGrid =(numElements + threadsPerBlock - 1) / threadsPerBlock;
                 add<<<1,1>>>(d_A, d_B, d_C, numElements, pixel_size);
-                err = cudaGetLastError();
-                err = cudaMemcpy(h_C, d_C, size, cudaMemcpyDeviceToHost);
-                err = cudaFree(d_A);
-                err = cudaFree(d_B);
-                err = cudaFree(d_C);
+                cudaGetLastError();
+                cudaMemcpy(h_C, d_C, size, cudaMemcpyDeviceToHost);
+                cudaFree(d_A);
+                cudaFree(d_B);
+                cudaFree(d_C);
                 free(h_A);
                 free(h_B);
                 free(h_C);
-                err = cudaDeviceReset();
+                cudaDeviceReset();
                 rect.x = r.x + j;
                 rect.y = r.y + i;
                 rect.width = j + pixel_size < r.height ? pixel_size : r.height - j;
