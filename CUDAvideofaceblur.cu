@@ -60,7 +60,7 @@ int main(int argc, char* argv[])
 
     // Copy result back to host
     cudaMemcpy(c, d_c, size, cudaMemcpyDeviceToHost);
-    cout << c;
+    cout << c << endl;
     // Cleanup
     free(a); free(b); free(c);
     cudaFree(d_a); cudaFree(d_b); cudaFree(d_c);
@@ -104,12 +104,8 @@ int main(int argc, char* argv[])
         double fps = capture.get(CAP_PROP_FPS); //after open the capture obj
         int total_frames = capture.get(cv::CAP_PROP_FRAME_COUNT);
 
-        cout << "Source info:\n Size:" << frame_size << endl;
-        cout << " Frames per seconds:" << fps << endl;
-        cout << " Total frames: " << total_frames << endl;
-
         //Define los fps de video de salida
-        int FPS = 25; //Frames per second
+        int FPS = fps; //Frames per second
 
         //Defina el códec de video por FOURCC, método de grabación, entero fourcc
         int fcc = VideoWriter::fourcc('X', 'V', 'I', 'D');
