@@ -159,18 +159,11 @@ void detectAndDraw(Mat& img, CascadeClassifier& cascade,
                 float *h_C = (float *)malloc(size);
 
                 h_A[0] = r.x;
-                h_A[0] = r.x;
-                h_B[0] = j;
                 h_B[0] = j;
                 h_A[1] = r.y;
-                h_A[1] = r.y;
-                h_B[1] = i;
                 h_B[1] = i;
                 h_A[2] = pixel_size;
-                h_A[2] = pixel_size;
                 h_B[2] = j;
-                h_B[2] = j;
-                h_A[3] = pixel_size;
                 h_A[3] = pixel_size;
                 h_B[3] = i;
 
@@ -196,8 +189,8 @@ void detectAndDraw(Mat& img, CascadeClassifier& cascade,
 
                 err = cudaMemcpy(h_C, d_C, size, cudaMemcpyDeviceToHost);
 
-                rect.x = h_C[0];
-                rect.y = h_C[1];
+                rect.x = r.x + j;
+                rect.y =r.y + i;
                 rect.width = j + pixel_size < r.height ? pixel_size : r.height - j;
                 rect.height = i + pixel_size < r.width ? pixel_size : r.width - i;
                 
