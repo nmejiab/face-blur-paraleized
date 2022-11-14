@@ -196,6 +196,12 @@ void detectAndDraw(Mat& img, CascadeClassifier& cascade,
 
                 err = cudaMemcpy(h_C, d_C, size, cudaMemcpyDeviceToHost);
 
+                cout << c[0] << endl;
+                cout << c[1] << endl;
+                cout << c[2] << endl;
+                cout << c[3] << endl;
+                
+                
                 rect.x = r.x + j;
                 rect.y = r.y + i;
                 rect.width = j + pixel_size < r.height ? pixel_size : r.height - j;
