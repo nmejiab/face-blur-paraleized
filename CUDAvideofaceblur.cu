@@ -131,7 +131,8 @@ void detectAndDraw(Mat& img, CascadeClassifier& cascade,
     cascade.detectMultiScale(smallImg, faces, 1.1,
         2, 0 | CASCADE_SCALE_IMAGE, Size(30, 30));
 
-    // Dibuja círculos alrededor de las caras.
+        cout << faces.size() << endl;
+    // Pixela las caras.
     for (size_t h = 0; h < faces.size(); h++)
     {
         Rect r = faces[h];
@@ -149,7 +150,6 @@ void detectAndDraw(Mat& img, CascadeClassifier& cascade,
                 // Print the vector length to be used, and compute its size
                 int numElements = 4;
                 size_t size = numElements * sizeof(float);
-                printf("[Vector addition of %d elements]\n", numElements);
 
                 // Allocate the host input vector A
                 float *h_A = (float *)malloc(size);
@@ -197,18 +197,7 @@ void detectAndDraw(Mat& img, CascadeClassifier& cascade,
                 err = cudaGetLastError();
 
                 err = cudaMemcpy(h_C, d_C, size, cudaMemcpyDeviceToHost);
-                
-                err = cudaFree(d_A);
 
-                err = cudaFree(d_B);
-
-                err = cudaFree(d_C);
-
-                free(h_A);
-                free(h_B);
-                free(h_C);
-
-                err = cudaDeviceReset();
                 rect.x = r.x + j;
                 rect.y = r.y + i;
                 rect.width = j + pixel_size < r.height ? pixel_size : r.height - j;
