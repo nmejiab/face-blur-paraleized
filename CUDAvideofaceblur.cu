@@ -97,7 +97,7 @@ int main(int argc, char* argv[])
         capture.open(videoRouteIn);
         filename = videoRouteExit;// Nombre del video de salida
     }
-    int total_frames = 0;
+    int total_frames = capture.get(cv::CAP_PROP_FRAME_COUNT);
     if (capture.isOpened())
     {
         // capturar fotogramas de vídeo y detectar rostros
@@ -123,8 +123,17 @@ int main(int argc, char* argv[])
         while (1)
         {
             capture >> frame;
-            if (frame.empty())
+            if (frame.empty()){
+                cout << "Source info:\n Size:" << frame_size << endl;
+                cout << " Frames per seconds:" << fps << endl;
+                cout << " Total frames: " << total_frames << endl;
+                cout << "VIDEOWRITER_PROP_FRAMEBYTES:" << writer.get(cv::VIDEOWRITER_PROP_FRAMEBYTES)  << endl;
+                cout << " Frames per seconds write:" << writer.get(cv::CAP_PROP_FRAME_WIDTH) << endl;
+                cout << " Total frames write: " << writer.get(cv::CAP_PROP_FRAME_HEIGHT) << endl;
+                cout << " Frames per seconds write:" << writer.get(CAP_PROP_FPS) << endl;
+                cout << " Total frames write: " << writer.get(cv::CAP_PROP_FRAME_COUNT) << endl;
                 break;
+            }
             Mat frame1 = frame.clone();
             detectAndDraw(frame1, cascade, nestedCascade, scale);
             //Escribe el frame en el archivo de salida.
@@ -136,16 +145,6 @@ int main(int argc, char* argv[])
         cout << "Video no encontrado";
     //lanza el video de salida
     writer.release();
-    int total_frames_writer = writer.get(cv::CAP_PROP_FRAME_COUNT);
-    if(total_frames_writer==total_frames){
-        cout<<"YES"<<endl;
-        cout<<total_frames_writer<<endl;
-        cout<<total_frames<<endl;
-    }else{
-        cout<<"NO"<<endl;
-        cout<<total_frames_writer<<endl;
-        cout<<total_frames<<endl;
-    }
     return 0;
 }
 
