@@ -130,8 +130,6 @@ void detectAndDraw(Mat& img, CascadeClassifier& cascade,
     // Detecta caras de diferentes tamaños usando el clasificador en cascada 
     cascade.detectMultiScale(smallImg, faces, 1.1,
         2, 0 | CASCADE_SCALE_IMAGE, Size(30, 30));
-
-        cout << faces.size() << endl;
     // Pixela las caras.
     for (size_t h = 0; h < faces.size(); h++)
     {
