@@ -165,16 +165,12 @@ void detectAndDraw(Mat& img, CascadeClassifier& cascade,
 
                 // Allocate the device input vector A
                 float *d_A = NULL;
-                if(cudaMalloc((void **)&d_A, size)!= cudaSuccess){
-                    cout<<cudaGetErrorString(cudaMalloc((void **)&d_A, size))<<endl;
-                }
+                cudaMalloc((void **)&d_A, size);
                 float *d_B = NULL;
                 cudaMalloc((void **)&d_B, size);
                 float *d_C = NULL;
                 cudaMalloc((void **)&d_C, size);
-                if(cudaMemcpy(d_A, h_A, size, cudaMemcpyHostToDevice)!= cudaSuccess){
-                    cout<<cudaGetErrorString(cudaMemcpy(d_A, h_A, size, cudaMemcpyHostToDevice))<<endl;
-                }
+                cudaMemcpy(d_A, h_A, size, cudaMemcpyHostToDevice)!= cudaSuccess);
                 cudaMemcpy(d_B, h_B, size, cudaMemcpyHostToDevice);
                 int threadsPerBlock = 256;
                 int blocksPerGrid =(numElements + threadsPerBlock - 1) / threadsPerBlock;
