@@ -21,6 +21,8 @@ using namespace cv;
 __global__ void add(int *a, int *b, int *c) {
     int index = threadIdx.x + blockIdx.x * blockDim.x;
     c[index] = a[index] + b[index];
+    cout << c << endl;
+    cout << "Test 2" << endl;
     __syncthreads();
 }
 
@@ -63,6 +65,7 @@ int main(int argc, char* argv[])
     // Copy result back to host
     cudaMemcpy(c, d_c, size, cudaMemcpyDeviceToHost);
     cout << c << endl;
+    cout << "Test 1" << endl;
     // Cleanup
     free(a); free(b); free(c);
     cudaFree(d_a); cudaFree(d_b); cudaFree(d_c);
