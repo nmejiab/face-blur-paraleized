@@ -62,7 +62,6 @@ int main(int argc, char* argv[])
 
     // Copy result back to host
     cudaMemcpy(c, d_c, size, cudaMemcpyDeviceToHost);
-    cout << c << endl;
     // Cleanup
     free(a); free(b); free(c);
     cudaFree(d_a); cudaFree(d_b); cudaFree(d_c);
@@ -83,17 +82,18 @@ int main(int argc, char* argv[])
     nestedCascade.load("/home/opencv/data/haarcascades/haarcascade_eye_tree_eyeglasses.xml");
     cascade.load("/home/opencv/data/haarcascades/haarcascade_frontalface_alt.xml");
     
-    // Ruta para el videos
-    String nameIn = argv[1];
-    String nameOut = argv[2];
-    String videoRouteIn = "/content/" + nameIn;
-    String videoRouteExit = "/content/" + nameOut;
        
-    cout << "Test 1" << endl;
+    
     if (argc != 3) {
-        cout << "Video no encontrado" << endl;
+        cout << "Error en numero de parametros de entrada" << endl;
     }
     else {
+        cout << "Test 1" << endl;
+        // Ruta para el videos
+        String nameIn = argv[1];
+        String nameOut = argv[2];
+        String videoRouteIn = "/content/" + nameIn;
+        String videoRouteExit = "/content/" + nameOut;
         capture.open(videoRouteIn);
         filename = videoRouteExit;// Nombre del video de salida
     }
