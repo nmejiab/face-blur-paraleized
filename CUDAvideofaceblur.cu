@@ -64,13 +64,14 @@ int main(int argc, char* argv[])
     
        
     
-    if (argc != 3) {
+    if (argc != 4) {
         cout << "Error en numero de parametros de entrada" << endl;
     }
     else {
         // Ruta para el videos
         String nameIn = argv[1];
         String nameOut = argv[2];
+        int threadsPerBlock = argv[3];
         String videoRouteIn = "/content/" + nameIn;
         String videoRouteExit = "/content/" + nameOut;
         capture.open(videoRouteIn);
@@ -105,7 +106,7 @@ int main(int argc, char* argv[])
                 break;
             }
             Mat frame1 = frame.clone();
-            detectAndDraw(frame1, cascade, nestedCascade, scale);
+            detectAndDraw(frame1, cascade, nestedCascade, scale, threadsPerBlock);
             //Escribe el frame en el archivo de salida.
             writer.write(frame1);
         }
@@ -119,7 +120,7 @@ int main(int argc, char* argv[])
 
 void detectAndDraw(Mat& img, CascadeClassifier& cascade,
     CascadeClassifier& nestedCascade,
-    double scale)
+    double scale, int threadsPerBlock)
 {
     vector<Rect> faces, faces2;
     Mat gray, smallImg;
@@ -186,7 +187,7 @@ void detectAndDraw(Mat& img, CascadeClassifier& cascade,
 
                 err = cudaMemcpy(d_B, h_B, size, cudaMemcpyHostToDevice);
 
-                int threadsPerBlock = 256;
+                
                 int blocksPerGrid =(numElements + threadsPerBlock - 1) / threadsPerBlock;
                 Add<<<blocksPerGrid, threadsPerBlock>>>(d_A, d_B, d_C, numElements, pixel_size);
                 err = cudaGetLastError();
