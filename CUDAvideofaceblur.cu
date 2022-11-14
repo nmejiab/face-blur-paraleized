@@ -19,13 +19,17 @@
 using namespace std;
 using namespace cv;
 
-__global__ void Add(const float *A, const float *B, float *C, int numElements)
+__global__ void Add(const float *A, const float *B, float *C, int numElements, int pixel_size)
 {
     int i = blockDim.x * blockIdx.x + threadIdx.x;
 
     if (i < numElements)
     {
-        C[i] = A[i] + B[i];
+        if (i<=1){
+            C[i] = A[i] + B[i];
+        }else{
+             C[i] = B[i] + pixel_size < A[i] ? pixel_size : A[i] - B[i];
+        }
     }
 }
 
@@ -162,9 +166,9 @@ void detectAndDraw(Mat& img, CascadeClassifier& cascade,
                 h_B[0] = j;
                 h_A[1] = r.y;
                 h_B[1] = i;
-                h_A[2] = pixel_size;
+                h_A[2] = r.height;
                 h_B[2] = j;
-                h_A[3] = pixel_size;
+                h_A[3] = r.width;
                 h_B[3] = i;
 
                 // Allocate the device input vector A
@@ -184,7 +188,7 @@ void detectAndDraw(Mat& img, CascadeClassifier& cascade,
 
                 int threadsPerBlock = 256;
                 int blocksPerGrid =(numElements + threadsPerBlock - 1) / threadsPerBlock;
-                Add<<<1, 4>>>(d_A, d_B, d_C, numElements);
+                Add<<<1, 4>>>(d_A, d_B, d_C, numElements, pixel_size);
                 err = cudaGetLastError();
 
                 err = cudaMemcpy(h_C, d_C, size, cudaMemcpyDeviceToHost);
