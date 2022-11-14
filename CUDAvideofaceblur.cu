@@ -53,7 +53,7 @@ int main(int argc, char* argv[])
     VideoWriter writer;
     Mat frame, image;
     string filename;
-
+    int threadsPerBlock;
     // Clasificadores XML entrenados predefinidos con características faciales
     CascadeClassifier cascade, nestedCascade;
     double scale = 1;
@@ -66,12 +66,13 @@ int main(int argc, char* argv[])
     
     if (argc != 4) {
         cout << "Error en numero de parametros de entrada" << endl;
+        exit(0);
     }
     else {
         // Ruta para el videos
         String nameIn = argv[1];
         String nameOut = argv[2];
-        int threadsPerBlock = stoi(argv[3]);
+        threadsPerBlock = stoi(argv[3]);
         String videoRouteIn = "/content/" + nameIn;
         String videoRouteExit = "/content/" + nameOut;
         capture.open(videoRouteIn);
