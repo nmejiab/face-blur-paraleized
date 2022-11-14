@@ -41,7 +41,7 @@ void random_ints(int* a, int n){
 
 // Function para detectar rostros
 void detectAndDraw(Mat& img, CascadeClassifier& cascade,
-    CascadeClassifier& nestedCascade, double scale);
+    CascadeClassifier& nestedCascade, double scale, int threadsPerBlock);
 string cascadeName, nestedCascadeName;
 
 int main(int argc, char* argv[])
