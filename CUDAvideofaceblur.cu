@@ -71,7 +71,7 @@ int main(int argc, char* argv[])
         // Ruta para el videos
         String nameIn = argv[1];
         String nameOut = argv[2];
-        int threadsPerBlock = argv[3];
+        int threadsPerBlock = stoi(argv[3]);
         String videoRouteIn = "/content/" + nameIn;
         String videoRouteExit = "/content/" + nameOut;
         capture.open(videoRouteIn);
