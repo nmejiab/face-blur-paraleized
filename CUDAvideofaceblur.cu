@@ -119,15 +119,17 @@ int main(int argc, char* argv[])
 
         //Inicializar el objeto VideoWriter
         writer = VideoWriter(filename, fcc, FPS, frame_size, true);
+        int i = 0;
         while (1)
         {
             capture >> frame;
             if (frame.empty())
                 break;
             Mat frame1 = frame.clone();
-            detectAndDraw(frame1, cascade, nestedCascade, scale);
+            detectAndDraw(capture[i], cascade, nestedCascade, scale);
             //Escribe el frame en el archivo de salida.
             writer.write(frame1);
+            i++;
         }
     }
     else
