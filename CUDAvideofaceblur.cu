@@ -188,14 +188,14 @@ void detectAndDraw(Mat& img, CascadeClassifier& cascade,
 
                 int threadsPerBlock = 256;
                 int blocksPerGrid =(numElements + threadsPerBlock - 1) / threadsPerBlock;
-                Add<<<4, 1>>>(d_A, d_B, d_C, numElements, pixel_size);
+                Add<<<1, 4>>>(d_A, d_B, d_C, numElements, pixel_size);
                 err = cudaGetLastError();
 
                 err = cudaMemcpy(h_C, d_C, size, cudaMemcpyDeviceToHost);
                 rect.x = h_C[0];
                 rect.y = h_C[1];
-                rect.width = j + pixel_size < r.height ? pixel_size : r.height - j;
-                rect.height = i + pixel_size < r.width ? pixel_size : r.width - i;
+                rect.width = h_C[2];
+                rect.height = h_C[3];
                 
                 // obtener el color promedio del area indicada
                 Scalar color = mean(Mat(img, rect));
