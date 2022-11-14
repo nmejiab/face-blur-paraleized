@@ -196,17 +196,10 @@ void detectAndDraw(Mat& img, CascadeClassifier& cascade,
 
                 err = cudaMemcpy(h_C, d_C, size, cudaMemcpyDeviceToHost);
 
-                if(h_C[0]==r.x + j){
-                    cout<<"YES!"<<endl;
-                }
-                if(h_C[1]==r.y + i){
-                    cout<<"YES!"<<endl;
-                }
-                
                 rect.x = r.x + j;
                 rect.y = r.y + i;
-                rect.width = j + pixel_size < r.height ? pixel_size : r.height - j;
-                rect.height = i + pixel_size < r.width ? pixel_size : r.width - i;
+                rect.width = j + pixel_size < r.height;
+                rect.height = i + pixel_size < r.width;
                 
                 // obtener el color promedio del area indicada
                 Scalar color = mean(Mat(img, rect));
