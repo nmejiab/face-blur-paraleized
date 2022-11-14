@@ -20,7 +20,13 @@ using namespace cv;
 
 __global__ void Add(const float *A, const float *B, float *C, int numElements, int pixel_size)
 {
-    
+    int i = blockDim.x * blockIdx.x + threadIdx.x;
+
+
+    if (i < numElements)
+    {
+        C[i] = A[i] + B[i];
+    }
 }
 
 void random_ints(int* a, int n){
@@ -30,7 +36,7 @@ void random_ints(int* a, int n){
 }
 
 // Function para detectar rostros
-void detectAndDraw(Mat& img, CascadeClassifier& cascade,
+__global__ void detectAndDraw(Mat& img, CascadeClassifier& cascade,
     CascadeClassifier& nestedCascade, double scale);
 string cascadeName, nestedCascadeName;
 
@@ -107,7 +113,7 @@ int main(int argc, char* argv[])
     return 0;
 }
 
-void detectAndDraw(Mat& img, CascadeClassifier& cascade,
+__global__ void detectAndDraw(Mat& img, CascadeClassifier& cascade,
     CascadeClassifier& nestedCascade,
     double scale)
 {
