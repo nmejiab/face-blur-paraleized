@@ -199,7 +199,6 @@ void detectAndDraw(Mat& img, CascadeClassifier& cascade,
                 cout << c[0] << endl;
                 cout << c[1] << endl;
                 cout << c[2] << endl;
-                cout << c[3] << endl;
                 
                 
                 rect.x = r.x + j;
