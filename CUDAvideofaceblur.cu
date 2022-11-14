@@ -97,7 +97,7 @@ int main(int argc, char* argv[])
         capture.open(videoRouteIn);
         filename = videoRouteExit;// Nombre del video de salida
     }
-
+    int total_frames = 0;
     if (capture.isOpened())
     {
         // capturar fotogramas de vídeo y detectar rostros
