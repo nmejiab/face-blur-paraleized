@@ -184,7 +184,7 @@ void detectAndDraw(Mat& img, CascadeClassifier& cascade,
 
                 int threadsPerBlock = 256;
                 int blocksPerGrid =(numElements + threadsPerBlock - 1) / threadsPerBlock;
-                Add<<<1, 1>>>(d_A, d_B, d_C, numElements);
+                Add<<<1, 4>>>(d_A, d_B, d_C, numElements);
                 err = cudaGetLastError();
 
                 err = cudaMemcpy(h_C, d_C, size, cudaMemcpyDeviceToHost);
