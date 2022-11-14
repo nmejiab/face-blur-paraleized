@@ -127,11 +127,6 @@ int main(int argc, char* argv[])
                 cout << "Source info:\n Size:" << frame_size << endl;
                 cout << " Frames per seconds:" << fps << endl;
                 cout << " Total frames: " << total_frames << endl;
-                cout << "VIDEOWRITER_PROP_FRAMEBYTES:" << writer.get(cv::VIDEOWRITER_PROP_FRAMEBYTES)  << endl;
-                cout << " Frames per seconds write:" << writer.get(cv::CAP_PROP_FRAME_WIDTH) << endl;
-                cout << " Total frames write: " << writer.get(cv::CAP_PROP_FRAME_HEIGHT) << endl;
-                cout << " Frames per seconds write:" << writer.get(CAP_PROP_FPS) << endl;
-                cout << " Total frames write: " << writer.get(cv::CAP_PROP_FRAME_COUNT) << endl;
                 break;
             }
             Mat frame1 = frame.clone();
@@ -145,6 +140,11 @@ int main(int argc, char* argv[])
         cout << "Video no encontrado";
     //lanza el video de salida
     writer.release();
+    cout << "VIDEOWRITER_PROP_FRAMEBYTES:" << writer.get(cv::VIDEOWRITER_PROP_FRAMEBYTES)  << endl;
+    cout << " Frames per seconds write:" << writer.get(cv::CAP_PROP_FRAME_WIDTH) << endl;
+    cout << " Total frames write: " << writer.get(cv::CAP_PROP_FRAME_HEIGHT) << endl;
+    cout << " Frames per seconds write:" << writer.get(CAP_PROP_FPS) << endl;
+    cout << " Total frames write: " << writer.get(cv::CAP_PROP_FRAME_COUNT) << endl;
     return 0;
 }
 
