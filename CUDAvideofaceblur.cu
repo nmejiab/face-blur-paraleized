@@ -58,6 +58,7 @@ int main(int argc, char* argv[])
 
     // Launch add() kernel on GPU
     add<<<N/THREADS_PER_BLOCK,THREADS_PER_BLOCK>>>(d_a, d_b, d_c);
+    cudaDeviceSynchronize();
 
     // Copy result back to host
     cudaMemcpy(c, d_c, size, cudaMemcpyDeviceToHost);
