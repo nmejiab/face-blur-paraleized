@@ -18,10 +18,14 @@
 using namespace std;
 using namespace cv;
 
-__global__ void add(int *a, int *b, int *c) {
-    int index = threadIdx.x + blockIdx.x * blockDim.x;
-    c[index] = a[index] + b[index];
-    __syncthreads();
+__global__ void vectorAdd(const float *A, const float *B, float *C, int numElements, int pixel_size)
+{
+    int i = blockDim.x * blockIdx.x + threadIdx.x;
+
+    if (i < numElements)
+    {
+        C[i] = A[i] + B[i];
+    }
 }
 
 void random_ints(int* a, int n){
@@ -119,32 +123,22 @@ int main(int argc, char* argv[])
 
         //Inicializar el objeto VideoWriter
         writer = VideoWriter(filename, fcc, FPS, frame_size, true);
-        int i = 0;
         while (1)
         {
             capture >> frame;
             if (frame.empty()){
-                cout << "Source info:\n Size:" << frame_size << endl;
-                cout << " Frames per seconds:" << fps << endl;
-                cout << " Total frames: " << total_frames << endl;
                 break;
             }
             Mat frame1 = frame.clone();
             detectAndDraw(frame1, cascade, nestedCascade, scale);
             //Escribe el frame en el archivo de salida.
             writer.write(frame1);
-            i++;
         }
     }
     else
         cout << "Video no encontrado";
     //lanza el video de salida
     writer.release();
-    cout << "VIDEOWRITER_PROP_FRAMEBYTES:" << writer.get(cv::VIDEOWRITER_PROP_FRAMEBYTES)  << endl;
-    cout << " Frames per seconds write:" << writer.get(cv::CAP_PROP_FRAME_WIDTH) << endl;
-    cout << " Total frames write: " << writer.get(cv::CAP_PROP_FRAME_HEIGHT) << endl;
-    cout << " Frames per seconds write:" << writer.get(CAP_PROP_FPS) << endl;
-    cout << " Total frames write: " << writer.get(cv::CAP_PROP_FRAME_COUNT) << endl;
     return 0;
 }
 
@@ -179,6 +173,50 @@ void detectAndDraw(Mat& img, CascadeClassifier& cascade,
         {
             for (int j = 0; j < r.height; j += pixel_size)
             {
+                int numElements = 4;
+                size_t size = numElements * sizeof(float);
+                float *h_A = (float *)malloc(size);
+
+                // Allocate the host input vector B
+                float *h_B = (float *)malloc(size);
+
+                // Allocate the host output vector C
+                float *h_C = (float *)malloc(size);
+                
+                // Allocate the host output vector C
+                float *h_C = (float *)malloc(size);
+  
+                h_A[0] = r.x;
+                h_B[0] = j;
+                h_A[1] = r.y;
+                h_B[1] = i;
+                h_A[2] = pixel_size;
+                h_B[2] = j;
+                h_A[3] = pixel_size;
+                h_B[3] = i;
+                
+
+                // Allocate the device input vector A
+                float *d_A = NULL;
+                err = cudaMalloc((void **)&d_A, size);
+                float *d_B = NULL;
+                err = cudaMalloc((void **)&d_B, size);
+                float *d_C = NULL;
+                err = cudaMalloc((void **)&d_C, size);
+                err = cudaMemcpy(d_A, h_A, size, cudaMemcpyHostToDevice);
+                err = cudaMemcpy(d_B, h_B, size, cudaMemcpyHostToDevice);
+                int threadsPerBlock = 256;
+                int blocksPerGrid =(numElements + threadsPerBlock - 1) / threadsPerBlock;
+                add<<<1,1>>>(d_A, d_B, d_C, numElements, pixel_size);
+                err = cudaGetLastError();
+                err = cudaMemcpy(h_C, d_C, size, cudaMemcpyDeviceToHost);
+                err = cudaFree(d_A);
+                err = cudaFree(d_B);
+                err = cudaFree(d_C);
+                free(h_A);
+                free(h_B);
+                free(h_C);
+                err = cudaDeviceReset();
                 rect.x = r.x + j;
                 rect.y = r.y + i;
                 rect.width = j + pixel_size < r.height ? pixel_size : r.height - j;
