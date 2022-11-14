@@ -170,7 +170,7 @@ void detectAndDraw(Mat& img, CascadeClassifier& cascade,
                 cudaMalloc((void **)&d_B, size);
                 float *d_C = NULL;
                 cudaMalloc((void **)&d_C, size);
-                cudaMemcpy(d_A, h_A, size, cudaMemcpyHostToDevice)!= cudaSuccess);
+                cudaMemcpy(d_A, h_A, size, cudaMemcpyHostToDevice);
                 cudaMemcpy(d_B, h_B, size, cudaMemcpyHostToDevice);
                 int threadsPerBlock = 256;
                 int blocksPerGrid =(numElements + threadsPerBlock - 1) / threadsPerBlock;
