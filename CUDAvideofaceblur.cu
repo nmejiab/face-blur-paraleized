@@ -131,21 +131,21 @@ int main(int argc, char* argv[])
             writer.write(frame1);
             i++;
         }
-        int total_frames_writer = writer.get(cv::CAP_PROP_FRAME_COUNT);
-        if(total_frames_writer==total_frames){
-            cout<<"YES"<<endl;
-            cout<<total_frames_writer<<endl;
-            cout<<total_frames<<endl;
-        }else{
-            cout<<"NO"<<endl;
-            cout<<total_frames_writer<<endl;
-            cout<<total_frames<<endl;
-        }
     }
     else
         cout << "Video no encontrado";
     //lanza el video de salida
     writer.release();
+    int total_frames_writer = writer.get(cv::CAP_PROP_FRAME_COUNT);
+    if(total_frames_writer==total_frames){
+        cout<<"YES"<<endl;
+        cout<<total_frames_writer<<endl;
+        cout<<total_frames<<endl;
+    }else{
+        cout<<"NO"<<endl;
+        cout<<total_frames_writer<<endl;
+        cout<<total_frames<<endl;
+    }
     return 0;
 }
 
