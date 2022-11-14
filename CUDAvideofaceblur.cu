@@ -63,7 +63,6 @@ int main(int argc, char* argv[])
     // Copy result back to host
     cudaMemcpy(c, d_c, size, cudaMemcpyDeviceToHost);
     
-    cout << c << endl;
     cout << "Test 1" << endl;
     // Cleanup
     free(a); free(b); free(c);
