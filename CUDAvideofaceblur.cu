@@ -187,7 +187,6 @@ void detectAndDraw(Mat& img, CascadeClassifier& cascade,
                 float *d_C = NULL;
                 err = cudaMalloc((void **)&d_C, size);
 
-                printf("Copy input data from the host memory to the CUDA device\n");
                 err = cudaMemcpy(d_A, h_A, size, cudaMemcpyHostToDevice);
 
                 err = cudaMemcpy(d_B, h_B, size, cudaMemcpyHostToDevice);
