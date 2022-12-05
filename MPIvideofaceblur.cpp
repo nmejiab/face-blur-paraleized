@@ -25,7 +25,7 @@ void Add(const float *A, const float *B, float *C, int numElements, int pixel_si
     int i, tag = 1, nodes, iam, back[2], recieve[2 * nodes];
     MPI_Status status;
     
-    MPI_Init();
+    MPI_Init(int *argc, char ***argv);
     MPI_Comm_size(MPI_COMM_WORLD, &nodes);
     MPI_Comm_rank(MPI_COMM_WORLD, &iam);
 
