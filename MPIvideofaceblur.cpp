@@ -185,8 +185,6 @@ void detectAndDraw(Mat& img, CascadeClassifier& cascade,
         {
             for (int j = 0; j < r.height; j += pixel_size)
             {
-                cudaError_t err = cudaSuccess;
-
                 // Print the vector length to be used, and compute its size
                 int numElements = 4;
                 size_t size = numElements * sizeof(float);
@@ -208,28 +206,9 @@ void detectAndDraw(Mat& img, CascadeClassifier& cascade,
                 h_B[2] = j;
                 h_A[3] = r.width;
                 h_B[3] = i;
-
-                // Allocate the device input vector A
-                float *d_A = NULL;
-                err = cudaMalloc((void **)&d_A, size);
-
-                float *d_B = NULL;
-                err = cudaMalloc((void **)&d_B, size);
-
-               
-                float *d_C = NULL;
-                err = cudaMalloc((void **)&d_C, size);
-
-                err = cudaMemcpy(d_A, h_A, size, cudaMemcpyHostToDevice);
-
-                err = cudaMemcpy(d_B, h_B, size, cudaMemcpyHostToDevice);
-
                 
-                int blocksPerGrid =(numElements + threadsPerBlock - 1) / threadsPerBlock;
-                Add<<<blocksPerGrid, threadsPerBlock>>>(d_A, d_B, d_C, numElements, pixel_size);
-                err = cudaGetLastError();
-
-                err = cudaMemcpy(h_C, d_C, size, cudaMemcpyDeviceToHost);
+                Add(h_A, h_B, h_C, numElements, pixel_size);
+                
                 rect.x = h_C[0];
                 rect.y = h_C[1];
                 rect.width = h_C[2];
