@@ -18,7 +18,6 @@
 
 using namespace std;
 using namespace cv;
-using namespace Comm;
 using namespace MPI;
 
 void Add(const float *A, const float *B, float *C, int numElements, int pixel_size)
@@ -43,12 +42,12 @@ void Add(const float *A, const float *B, float *C, int numElements, int pixel_si
                 message[j * 2] = A[i * cant + j];
                 message[j * 2 + 1] = B[i * cant + j];
             }
-            Send(message, MSG_LENGTH * cant, MPI_FLOAT, i, tag, 
+            Comm::Send(message, MSG_LENGTH * cant, MPI_FLOAT, i, tag, 
                     MPI_COMM_WORLD);
         }
     } else {
 
-        MPI_Recv(message, MSG_LENGTH * cant, MPI_FLOAT, 0, tag, MPI_COMM_WORLD, 
+        Comm::Recv(message, MSG_LENGTH * cant, MPI_FLOAT, 0, tag, MPI_COMM_WORLD, 
                 &status);
 
     }
@@ -208,7 +207,7 @@ void detectAndDraw(Mat& img, CascadeClassifier& cascade,
                 h_B[3] = i;
                 
                 Add(h_A, h_B, h_C, numElements, pixel_size);
-                
+
                 rect.x = h_C[0];
                 rect.y = h_C[1];
                 rect.width = h_C[2];
