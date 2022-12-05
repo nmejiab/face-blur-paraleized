@@ -71,6 +71,8 @@ void Add(const float *A, const float *B, float *C, int numElements, int pixel_si
             c[i / 2] = recieve[i];
         }
     }
+
+    MPI_Finalize();
 }
 
 // Function para detectar rostros
