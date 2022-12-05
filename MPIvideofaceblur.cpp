@@ -42,8 +42,7 @@ void Add(const float *A, const float *B, float *C, int numElements, int pixel_si
                 message[j * 2] = A[i * cant + j];
                 message[j * 2 + 1] = B[i * cant + j];
             }
-            Comm::Send(message, MSG_LENGTH * cant, MPI_FLOAT, i, tag, 
-                    MPI_COMM_WORLD);
+            Comm::Send(message, MSG_LENGTH * cant, MPI_FLOAT, i, tag, MPI_COMM_WORLD);
         }
     } else {
 
